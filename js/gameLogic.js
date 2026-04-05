@@ -318,3 +318,33 @@ function showPodium(scores){
     third.style.background = scores[2].color;
   }
 }
+// ===== RESET PODIUM / BACK TO MENU =====
+function resetPodium(){
+  // Hide podium
+  document.getElementById("podium").classList.add("hidden");
+
+  // Show setup screen
+  document.getElementById("setup").classList.remove("hidden");
+
+  // Reset core game state
+  players = [];
+  currentPlayer = 0;
+  turn = 1;
+  actionTracker = {};
+  stocks.forEach(s => {
+  s.owned = {};
+  s.totalSpent = {};
+  s.history = [];
+});
+
+  // Optional: clear player name inputs
+  const container = document.getElementById("playerNamesContainer");
+  if(container) container.innerHTML = "";
+
+  // Re-trigger player input generation
+  const playerCount = document.getElementById("playerCount");
+  if(playerCount){
+    const event = new Event("change");
+    playerCount.dispatchEvent(event);
+  }
+}
