@@ -218,8 +218,16 @@ function randomEvent(){
 
 // ===== WIN SYSTEM =====
 function checkWin(){
-  if(gameMode==="turns" && turn>modeValue) return endGame(true);
-  if(gameMode==="money" && players.some(p=>p.money>=modeValue)) return endGame(true);
+  function checkWin(){
+  if(gameMode==="turns" && turn >= modeValue){
+    endGame(true);
+    return;
+  }
+
+  if(gameMode==="money" && players.some(p => p.money >= modeValue)){
+    endGame(true);
+    return;
+  }
 }
 
 function endGame(force=false){
