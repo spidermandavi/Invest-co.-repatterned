@@ -1,0 +1,50 @@
+/* ===== BACKGROUND ===== */
+body {
+  background: linear-gradient(270deg, #0f1116, #1c1f2a, #0f1116);
+  background-size: 600% 600%;
+  animation: gradientMove 18s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== PODIUM ENTRY ===== */
+.podiumBlock {
+  transform: translateY(80px);
+  opacity: 0;
+  animation: rise 0.8s ease forwards;
+}
+
+#firstPlace {
+  background: linear-gradient(180deg, gold, #c9a400);
+  height: 180px;
+  animation-delay: 0.2s;
+  box-shadow: 0 0 25px gold;
+}
+
+#secondPlace {
+  background: linear-gradient(180deg, silver, #a8a8a8);
+  height: 140px;
+  animation-delay: 0.4s;
+}
+
+#thirdPlace {
+  background: linear-gradient(180deg, #cd7f32, #8b5a2b);
+  height: 110px;
+  animation-delay: 0.6s;
+}
+
+/* ===== RISE ===== */
+@keyframes rise {
+  from {
+    transform: translateY(80px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
