@@ -1,4 +1,4 @@
-// ===== MAIN.JS =====
+// ===== MAIN.JS yeah =====
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Game Ready");
 
