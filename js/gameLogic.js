@@ -348,3 +348,4 @@ function resetPodium(){
     playerCount.dispatchEvent(event);
   }
 }
+window.startGame = startGame;
