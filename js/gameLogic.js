@@ -265,3 +265,48 @@ function forceSell(){
     }
   });
 }
+// ===== SHOW PODIUM =====
+function showPodium(scores){
+  // Hide game screen
+  document.getElementById("game").classList.add("hidden");
+
+  // Show podium
+  document.getElementById("podium").classList.remove("hidden");
+
+  const first = document.getElementById("firstPlace");
+  const second = document.getElementById("secondPlace");
+  const third = document.getElementById("thirdPlace");
+
+  // Clear previous
+  first.innerHTML = "";
+  second.innerHTML = "";
+  third.innerHTML = "";
+
+  // Assign winners
+  if(scores[0]){
+    first.innerHTML = `
+      🥇<br>
+      <b>${scores[0].name}</b><br>
+      $${scores[0].total.toFixed(2)}
+    `;
+    first.style.background = scores[0].color;
+  }
+
+  if(scores[1]){
+    second.innerHTML = `
+      🥈<br>
+      <b>${scores[1].name}</b><br>
+      $${scores[1].total.toFixed(2)}
+    `;
+    second.style.background = scores[1].color;
+  }
+
+  if(scores[2]){
+    third.innerHTML = `
+      🥉<br>
+      <b>${scores[2].name}</b><br>
+      $${scores[2].total.toFixed(2)}
+    `;
+    third.style.background = scores[2].color;
+  }
+}
