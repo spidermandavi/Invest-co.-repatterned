@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Investment Game</title>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Investment Game</h1>
+
+  <!-- Setup -->
+  <div id="setup">
+    <label>Players:
+      <select id="playerCount">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </label>
+
+    <div id="playerNamesContainer"></div>
+
+    <label>Game Mode:
+      <select id="gameMode">
+        <option value="turns">Turns</option>
+        <option value="money">Target Money</option>
+      </select>
+    </label>
+
+    <input id="modeValue" placeholder="Enter value (e.g. 20 or 5000)" />
+
+    <button onclick="startGame()">Start Game</button>
+  </div>
+
+  <!-- Game -->
+  <div id="game" class="hidden">
+
+    <div id="infoBar"></div>
+
+    <div class="tradeToggle" id="buySellToggle"></div>
+
+    <table id="stockTable">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Price</th>
+          <th>Change</th>
+          <th>Owned</th>
+          <th>Trade</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="buttons">
+      <button onclick="endTurn()">End Turn</button>
+      <button class="danger" onclick="confirmEndGame()">End Game</button>
+    </div>
+
+  </div>
+
+  <!-- Podium -->
+  <div id="podium" class="hidden">
+    <div id="celebrationContainer">
+      <div class="podiumBlock" id="firstPlace"></div>
+      <div class="podiumBlock" id="secondPlace"></div>
+      <div class="podiumBlock" id="thirdPlace"></div>
+    </div>
+
+    <button onclick="resetPodium()">Back to Menu</button>
+  </div>
+
+</div>
+
+<!-- Popup -->
+<div id="popup" class="hidden">
+  <div id="popupContent"></div>
+</div>
+
+<script src="js/gameLogic.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
