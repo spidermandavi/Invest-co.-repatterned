@@ -157,8 +157,6 @@ function updateMarket() {
 }
 
 // ===== DIVIDENDS =====
-let lastDividends = []; // store last dividends for review
-
 function applyDividends() {
   // Initialize empty arrays for all players
   lastDividends = players.map(() => []);
