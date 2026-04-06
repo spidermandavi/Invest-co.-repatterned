@@ -27,9 +27,9 @@ function popup(html, options = {}) {
 }
 
 // ===== GRAPH DRAWER =====
-function drawGraph(data, color = "#4caf50") {
+function drawGraphMulti(players) {
   const canvas = document.getElementById("graphCanvas");
-  if (!canvas || !data || data.length < 2) return;
+  if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
@@ -42,54 +42,79 @@ function drawGraph(data, color = "#4caf50") {
   const w = canvas.clientWidth - padding*2;
   const h = canvas.clientHeight - padding*2;
 
-  let max = Math.max(...data);
-  let min = Math.min(...data);
-  if(max===min){ max+=1; min-=1; }
+  // ===== COLLECT ALL VALUES =====
+  let allValues = [];
+  players.forEach(p => {
+    if (p.history) allValues.push(...p.history);
+  });
 
+  let min = Math.min(...allValues);
+  let max = Math.max(...allValues);
+
+  if (min === max) {
+    min -= 1;
+    max += 1;
+  }
+
+  // ===== NICE ROUNDING =====
+  const range = max - min;
+  const step = Math.pow(10, Math.floor(Math.log10(range))) / 2;
+
+  min = Math.floor(min / step) * step;
+  max = Math.ceil(max / step) * step;
+
+  // ===== AXES =====
   ctx.strokeStyle = "#888";
   ctx.lineWidth = 1;
 
   ctx.beginPath();
   ctx.moveTo(padding, padding);
-  ctx.lineTo(padding, padding+h);
+  ctx.lineTo(padding, padding + h);
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(padding, padding+h);
-  ctx.lineTo(padding+w, padding+h);
+  ctx.moveTo(padding, padding + h);
+  ctx.lineTo(padding + w, padding + h);
   ctx.stroke();
 
+  // ===== GRID + LABELS =====
   ctx.fillStyle = "#aaa";
   ctx.font = "12px Arial";
-  const steps = 4;
-  for(let i=0;i<=steps;i++){
-    const value = min + (i/steps)*(max-min);
-    const y = padding+h-(i/steps)*h;
-    ctx.fillText(value.toFixed(0), 2, y+3);
+
+  const steps = 5;
+  for (let i = 0; i <= steps; i++) {
+    const value = min + (i / steps) * (max - min);
+    const y = padding + h - (i / steps) * h;
+
+    // Rounded labels
+    ctx.fillText(Math.round(value / step) * step, 5, y + 3);
 
     ctx.strokeStyle = "rgba(255,255,255,0.05)";
     ctx.beginPath();
     ctx.moveTo(padding, y);
-    ctx.lineTo(padding+w, y);
+    ctx.lineTo(padding + w, y);
     ctx.stroke();
   }
 
-  let progress = 0;
-  function animate(){
-    ctx.strokeStyle = color;
+  // ===== DRAW LINES =====
+  players.forEach(p => {
+    const data = p.history;
+    if (!data || data.length < 2) return;
+
+    ctx.strokeStyle = p.color;
     ctx.lineWidth = 2;
     ctx.beginPath();
-    const maxIndex = Math.floor(progress*(data.length-1));
-    for(let i=0;i<=maxIndex;i++){
-      const x = padding + (i/(data.length-1))*w;
-      const y = padding + h - ((data[i]-min)/(max-min))*h;
-      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-    }
+
+    data.forEach((val, i) => {
+      const x = padding + (i / (data.length - 1)) * w;
+      const y = padding + h - ((val - min) / (max - min)) * h;
+
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+
     ctx.stroke();
-    progress += 0.04;
-    if(progress<=1) requestAnimationFrame(animate);
-  }
-  animate();
+  });
 }
 
 // ===== SAFE INIT (FIXED BUG HERE) =====
@@ -212,20 +237,69 @@ function toggleInfo(i){
 // ===== PLAYER INFO =====
 function showPlayerInfo(playerIndex){
   const p = players[playerIndex];
+
   let total = p.money;
   let stockDetails = "";
 
   stocks.forEach(s=>{
     total += s.owned[playerIndex]*s.price;
+
     if(s.owned[playerIndex]>0){
       const avg = (s.totalSpent[playerIndex]/s.owned[playerIndex]).toFixed(2);
       const value = (s.owned[playerIndex]*s.price).toFixed(2);
+
       stockDetails += `${s.name}: ${s.owned[playerIndex]} shares, avg $${avg}, current $${value}<br>`;
     }
   });
 
-  popup(`<b>${p.name}</b><br>Total Worth: $${total.toFixed(2)}<br><br>${stockDetails||"No stocks"}`, { showOk: true });
-  setTimeout(()=>drawGraph(p.history,p.color),50);
+  // ===== CHANGE CALCULATION =====
+  let changeText = "";
+  if (p.history && p.history.length >= 2) {
+    const prev = p.history[p.history.length - 2];
+    const curr = p.history[p.history.length - 1];
+
+    const diff = curr - prev;
+    const percent = (diff / prev) * 100;
+
+    const color = diff > 0 ? "green" : diff < 0 ? "red" : "gray";
+
+    changeText = `<br>Change: <span style="color:${color}">
+      ${diff >= 0 ? "+" : ""}$${diff.toFixed(2)} (${percent.toFixed(2)}%)
+    </span>`;
+  }
+
+  // ===== DIFFERENCE VS OTHERS =====
+  let comparison = "<br><br><b>Comparison:</b><br>";
+
+  players.forEach((other, i)=>{
+    if(i === playerIndex) return;
+
+    let otherTotal = other.money;
+    stocks.forEach(s=>{
+      otherTotal += s.owned[i]*s.price;
+    });
+
+    const diff = total - otherTotal;
+    const color = diff > 0 ? "green" : diff < 0 ? "red" : "gray";
+
+    comparison += `
+      vs ${other.name}: 
+      <span style="color:${color}">
+        ${diff >= 0 ? "+" : ""}$${diff.toFixed(2)}
+      </span><br>
+    `;
+  });
+
+  popup(`
+    <b>${p.name}</b><br>
+    Total Worth: $${total.toFixed(2)}
+    ${changeText}
+    <br><br>
+    ${stockDetails || "No stocks"}
+    ${comparison}
+  `, { showOk: true, showGraph: true });
+
+  setTimeout(()=>drawGraphMulti(players), 50);
 }
 
 // ===== CONFIRM END =====
