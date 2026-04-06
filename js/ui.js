@@ -225,6 +225,7 @@ function showPlayerInfo(playerIndex){
   });
 
   popup(`<b>${p.name}</b><br>Total Worth: $${total.toFixed(2)}<br><br>${stockDetails||"No stocks"}`, { showOk: true });
+  setTimeout(()=>drawGraph(p.history,p.color),50);
 }
 
 // ===== CONFIRM END =====
