@@ -397,3 +397,6 @@ function showDividendPopup(playerIndex) {
 
   popup(html); // default popup with OK button
 }
+function viewLastDividends() {
+  showDividendPopup(currentPlayer);
+}
