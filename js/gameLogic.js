@@ -1,3 +1,4 @@
+let lastDividends = []; // store last dividends for review
 // ===== GAME STATE =====
 let players = [];
 let currentPlayer = 0;
@@ -8,9 +9,9 @@ let gameMode = "turns";
 let modeValue = 20;
 
 let stocks = [
-  { name: "KEPL3", price: 8.21, volatility: 0.20, owned: {}, totalSpent: {}, desc: "Machinery, medium risk.", history: [] },
-  { name: "KLBN4", price: 3.94, volatility: 0.15, owned: {}, totalSpent: {}, desc: "Paper, low risk.", history: [] },
-  { name: "ALUP4", price: 10.99, volatility: 0.12, owned: {}, totalSpent: {}, desc: "Energy, low risk.", history: [] },
+  { name: "KEPL3", price: 8.21, volatility: 0.20, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Machinery, medium risk.", history: [] },
+  { name: "KLBN4", price: 3.94, volatility: 0.15, dividend: 0.15, owned: {}, totalSpent: {}, desc: "Paper, low risk.", history: [] },
+  { name: "ALUP4", price: 10.99, volatility: 0.12, dividend: 0.5,  owned: {}, totalSpent: {}, desc: "Energy, low risk.", history: [] },
   { name: "SAPR4", price: 8.51, volatility: 0.15, owned: {}, totalSpent: {}, desc: "Water, low medium risk", history: [] },
   { name: "TASA4", price: 4.88, volatility: 0.35, owned: {}, totalSpent: {}, desc: "Guns, high volatility", history: [] },
   { name: "POMO4", price: 6.20, volatility: 0.15, owned: {}, totalSpent: {}, desc: "Buses, low medium risk.", history: [] },
@@ -156,22 +157,56 @@ function updateMarket() {
 
 // ===== DIVIDENDS =====
 function applyDividends() {
-  players.forEach((p, pi)=>{
-    stocks.forEach(s=>{
-      let owned = s.owned[pi];
-      let value = owned*s.price;
+  players.forEach((p, pi) => {
+    let totalDividends = 0;
 
-      let rate=0;
-      if(owned>=2000) rate=0.2;
-      else if(owned>=1000) rate=0.1;
-      else if(owned>=500) rate=0.075;
-      else if(owned>=100) rate=0.05;
-      else if(owned>=50) rate=0.025;
-      else if(owned>10) rate=0.005;
+    stocks.forEach(s => {
+      const owned = s.owned[pi];
+      if (owned <= 0) return;
 
-      p.money += value*rate;
+      // Calculate dividend based on stock price, shares owned, and its dividend yield
+      const dividendAmount = owned * s.price * s.dividend;
+      totalDividends += dividendAmount;
+
+      // Show a small popup for this stock
+      if (dividendAmount > 0) {
+        popup(`${p.name} received $${dividendAmount.toFixed(2)} in dividends from ${s.name}`, false);
+      }
+
+      p.money += dividendAmount;
     });
+
+    if(totalDividends > 0){
+      console.log(`${p.name} got a total of $${totalDividends.toFixed(2)} in dividends this turn.`);
+    }
   });
+}
+let lastDividends = []; // store last dividends for review
+
+function applyDividends() {
+  lastDividends = []; // reset each turn
+
+  players.forEach((p, pi) => {
+    let playerDividends = [];
+
+    stocks.forEach(s => {
+      const owned = s.owned[pi];
+      if (owned <= 0) return;
+
+      const dividendAmount = owned * s.price * s.dividend;
+      if (dividendAmount > 0) {
+        playerDividends.push({ stock: s.name, amount: dividendAmount });
+        p.money += dividendAmount;
+      }
+    });
+
+    if (playerDividends.length > 0) {
+      lastDividends[pi] = playerDividends;
+    }
+  });
+
+  // Show dividend popup for current player at the start of their turn
+  showDividendPopup(currentPlayer);
 }
 
 // ===== RANDOM EVENTS =====
