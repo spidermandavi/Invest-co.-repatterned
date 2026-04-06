@@ -218,7 +218,6 @@ function randomEvent(){
 
 // ===== WIN SYSTEM =====
 function checkWin(){
-  function checkWin(){
   if(gameMode==="turns" && turn >= modeValue){
     endGame(true);
     return;
