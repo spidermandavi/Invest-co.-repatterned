@@ -157,10 +157,9 @@ function updateMarket() {
 }
 
 // ===== DIVIDENDS =====
-let lastDividends = []; // store last dividends for review
-
 function applyDividends() {
-  lastDividends = []; // reset each turn
+  // Initialize empty arrays for all players
+  lastDividends = players.map(() => []);
 
   players.forEach((p, pi) => {
     let playerDividends = [];
@@ -169,23 +168,21 @@ function applyDividends() {
       const owned = s.owned[pi];
       if (owned <= 0) return;
 
-      // Calculate dividend based on stock price, shares owned, and its dividend yield
-      const dividendAmount = owned * s.price * s.dividend;
+      const dividendAmount = owned * s.price * (s.dividend || 0);
       if (dividendAmount > 0) {
         playerDividends.push({ stock: s.name, amount: dividendAmount });
         p.money += dividendAmount;
       }
     });
 
-    if (playerDividends.length > 0) {
-      lastDividends[pi] = playerDividends;
-    }
+    lastDividends[pi] = playerDividends;
   });
 
-  // Show dividend popup for current player at the start of their turn
-  showDividendPopup(currentPlayer);
+  // Show dividend popup for current player only
+  if (lastDividends[currentPlayer].length > 0) {
+    showDividendPopup(currentPlayer);
+  }
 }
-
 // ===== RANDOM EVENTS =====
 function flashPlayer(index, color = "#ffff00", duration = 800){
   const playerEl = document.getElementById(`player${index}`);
