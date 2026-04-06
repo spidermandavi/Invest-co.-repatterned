@@ -157,10 +157,13 @@ function updateMarket() {
 }
 
 // ===== DIVIDENDS =====
+let lastDividends = []; // store last dividends for review
+
 function applyDividends() {
   // Initialize empty arrays for all players
   lastDividends = players.map(() => []);
 
+  // Calculate dividends for each player
   players.forEach((p, pi) => {
     let playerDividends = [];
 
@@ -178,10 +181,74 @@ function applyDividends() {
     lastDividends[pi] = playerDividends;
   });
 
-  // Show dividend popup for current player only
-  if (lastDividends[currentPlayer].length > 0) {
-    showDividendPopup(currentPlayer);
+  // Show dividend popup for each player sequentially
+  let i = 0;
+  function showNext() {
+    if (i >= players.length) return;
+    if (lastDividends[i].length > 0) {
+      showDividendPopup(i, () => {
+        i++;
+        showNext();
+      });
+    } else {
+      i++;
+      showNext();
+    }
   }
+
+  showNext();
+}
+
+// ===== SHOW DIVIDEND POPUP =====
+function showDividendPopup(playerIndex, callback) {
+  const popupEl = document.getElementById("popup");
+  const popupContent = document.getElementById("popupContent");
+
+  let html = `<b>${players[playerIndex].name} received:</b><br>`;
+  lastDividends[playerIndex].forEach(d => {
+    html += `${d.stock}: $${d.amount.toFixed(2)}<br>`;
+  });
+
+  popupContent.innerHTML = html + `<br><button id="popupOk">OK</button>`;
+  popupEl.classList.remove("hidden");
+
+  document.getElementById("popupOk").onclick = () => {
+    popupEl.classList.add("hidden");
+    if (callback) callback(); // call next player
+  };
+}
+
+// ===== VIEW LAST DIVIDENDS BUTTON =====
+function viewLastDividends() {
+  if (!lastDividends || lastDividends.length === 0) {
+    popup("No dividends have been paid yet!");
+    return;
+  }
+
+  let html = "";
+  lastDividends.forEach((playerDivs, pi) => {
+    if (playerDivs.length === 0) return;
+    html += `<b>${players[pi].name} received:</b><br>`;
+    playerDivs.forEach(d => {
+      html += `${d.stock}: $${d.amount.toFixed(2)}<br>`;
+    });
+    html += "<br>";
+  });
+
+  popup(html);
+}
+
+// ===== GENERIC POPUP FUNCTION =====
+function popup(html) {
+  const popupEl = document.getElementById("popup");
+  const popupContent = document.getElementById("popupContent");
+
+  popupContent.innerHTML = html + `<br><button id="popupOk">OK</button>`;
+  popupEl.classList.remove("hidden");
+
+  document.getElementById("popupOk").onclick = () => {
+    popupEl.classList.add("hidden");
+  };
 }
 // ===== RANDOM EVENTS =====
 function flashPlayer(index, color = "#ffff00", duration = 800){
