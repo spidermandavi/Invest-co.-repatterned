@@ -116,6 +116,75 @@ function drawGraphMulti(players) {
     ctx.stroke();
   });
 }
+function drawGraphStock(history, color="#2196f3") {
+  const canvas = document.getElementById("graphCanvas");
+  if (!canvas || !history || history.length < 2) return;
+
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = canvas.clientWidth * dpr;
+  canvas.height = canvas.clientHeight * dpr;
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.scale(dpr,dpr);
+
+  const padding = 40;
+  const w = canvas.clientWidth - padding*2;
+  const h = canvas.clientHeight - padding*2;
+
+  let min = Math.min(...history);
+  let max = Math.max(...history);
+  if (min === max) { min -= 1; max += 1; }
+
+  // ===== NICE ROUNDING =====
+  const range = max - min;
+  const step = Math.pow(10, Math.floor(Math.log10(range))) / 2;
+  min = Math.floor(min / step) * step;
+  max = Math.ceil(max / step) * step;
+
+  // ===== AXES =====
+  ctx.strokeStyle = "#888";
+  ctx.lineWidth = 1;
+
+  ctx.beginPath();
+  ctx.moveTo(padding, padding);
+  ctx.lineTo(padding, padding + h);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(padding, padding + h);
+  ctx.lineTo(padding + w, padding + h);
+  ctx.stroke();
+
+  // ===== GRID + LABELS =====
+  ctx.fillStyle = "#aaa";
+  ctx.font = "12px Arial";
+  const steps = 5;
+  for (let i = 0; i <= steps; i++) {
+    const value = min + (i / steps) * (max - min);
+    const y = padding + h - (i / steps) * h;
+
+    ctx.fillText(Math.round(value / step) * step, 5, y + 3);
+
+    ctx.strokeStyle = "rgba(255,255,255,0.05)";
+    ctx.beginPath();
+    ctx.moveTo(padding, y);
+    ctx.lineTo(padding + w, y);
+    ctx.stroke();
+  }
+
+  // ===== DRAW LINE =====
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+
+  history.forEach((val, i) => {
+    const x = padding + (i / (history.length - 1)) * w;
+    const y = padding + h - ((val - min) / (max - min)) * h;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+}
 
 // ===== SAFE INIT (FIXED BUG HERE) =====
 function initUI() {
