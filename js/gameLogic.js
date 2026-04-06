@@ -156,31 +156,6 @@ function updateMarket() {
 }
 
 // ===== DIVIDENDS =====
-function applyDividends() {
-  players.forEach((p, pi) => {
-    let totalDividends = 0;
-
-    stocks.forEach(s => {
-      const owned = s.owned[pi];
-      if (owned <= 0) return;
-
-      // Calculate dividend based on stock price, shares owned, and its dividend yield
-      const dividendAmount = owned * s.price * s.dividend;
-      totalDividends += dividendAmount;
-
-      // Show a small popup for this stock
-      if (dividendAmount > 0) {
-        popup(`${p.name} received $${dividendAmount.toFixed(2)} in dividends from ${s.name}`, false);
-      }
-
-      p.money += dividendAmount;
-    });
-
-    if(totalDividends > 0){
-      console.log(`${p.name} got a total of $${totalDividends.toFixed(2)} in dividends this turn.`);
-    }
-  });
-}
 let lastDividends = []; // store last dividends for review
 
 function applyDividends() {
@@ -193,6 +168,7 @@ function applyDividends() {
       const owned = s.owned[pi];
       if (owned <= 0) return;
 
+      // Calculate dividend based on stock price, shares owned, and its dividend yield
       const dividendAmount = owned * s.price * s.dividend;
       if (dividendAmount > 0) {
         playerDividends.push({ stock: s.name, amount: dividendAmount });
