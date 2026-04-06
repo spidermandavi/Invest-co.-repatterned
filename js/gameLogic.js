@@ -1,4 +1,5 @@
 let lastDividends = []; // store last dividends for review
+
 // ===== GAME STATE =====
 let players = [];
 let currentPlayer = 0;
