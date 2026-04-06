@@ -231,7 +231,7 @@ function trade(stockIndex, amount){
 function toggleInfo(i){
   const s = stocks[i];
   popup(`<b>${s.name}</b><br>${s.desc}<br><br><i>Price History:</i>`, { showOk: true, showGraph: true });
-  setTimeout(()=>drawGraph(s.history,"#2196f3"),50);
+  setTimeout(()=>drawGraphStock(s.history,"#2196f3"),50);
 }
 
 // ===== PLAYER INFO =====
