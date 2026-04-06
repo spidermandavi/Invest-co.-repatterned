@@ -10,24 +10,24 @@ let gameMode = "turns";
 let modeValue = 20;
 
 let stocks = [
-  { name: "KEPL3", price: 8.21, volatility: 0.20, dividend: 0.09, owned: {}, totalSpent: {}, desc: "Machinery, medium risk.", history: [] },
-  { name: "KLBN4", price: 3.94, volatility: 0.15, dividend: 0.06, owned: {}, totalSpent: {}, desc: "Paper, low risk.", history: [] },
-  { name: "ALUP4", price: 10.99, volatility: 0.12, dividend: 0.06, owned: {}, totalSpent: {}, desc: "Energy, low risk.", history: [] },
-  { name: "SAPR4", price: 8.51, volatility: 0.15, dividend: 0.05, owned: {}, totalSpent: {}, desc: "Water, low medium risk", history: [] },
-  { name: "TASA4", price: 4.88, volatility: 0.35, dividend: 0.06, owned: {}, totalSpent: {}, desc: "Guns, high volatility", history: [] },
-  { name: "POMO4", price: 6.20, volatility: 0.15, dividend: 0.09, owned: {}, totalSpent: {}, desc: "Buses, low medium risk.", history: [] },
-  { name: "GRND3", price: 4.74, volatility: 0.10, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Shoes, low risk.", history: [] },
-  { name: "ROMI3", price: 7.15, volatility: 0.08, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Machinery, low risk", history: [] },
-  { name: "SOJA3", price: 7.13, volatility: 0.40, dividend: 0.02, owned: {}, totalSpent: {}, desc: "Seeds, high volatility.", history: [] },
-  { name: "FIQE3", price: 7.01, volatility: 0.25, dividend: 0.07, owned: {}, totalSpent: {}, desc: "Internet, medium risk.", history: [] },
-  { name: "BBSE3", price: 34.81, volatility: 0.10, dividend: 0.12, owned: {}, totalSpent: {}, desc: "Insurance, low medium risk.", history: [] },
-  { name: "CXSE3", price: 18.35, volatility: 0.10, dividend: 0.08, owned: {}, totalSpent: {}, desc: "Insurance, low medium risk.", history: [] },
-  { name: "BRBI11", price: 19.50, volatility: 0.28, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Investment Bank, medium risk.", history: [] },
-  { name: "BMGB4", price: 5, volatility: 0.17, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Bank, low medium risk.", history: [] },
-  { name: "CMIN3", price: 4.95, volatility: 0.30, dividend: 0.08, owned: {}, totalSpent: {}, desc: "Mining, high medium risk.", history: [] },
-  { name: "IFCM3", price: 1, volatility: 0.35, dividend: 0, owned: {}, totalSpent: {}, desc: "E-Commerce, low high risk.", history: [] },
-  { name: "PETR3", price: 53.91, volatility: 0.50, dividend: 0.08, owned: {}, totalSpent: {}, desc: "Petrolium, ultra high risk.", history: [] },
-  { name: "PRIO3", price: 66.21, volatility: 0.50, dividend: 0, owned: {}, totalSpent: {}, desc: "Petrolium, ultra high risk.", history: [] }
+  { name: "KEPL3", price: 8.21, volatility: 0.20, dividend: 0.09, owned: {}, totalSpent: {}, desc: "Machinery, medium risk.9% div", history: [] },
+  { name: "KLBN4", price: 3.94, volatility: 0.15, dividend: 0.06, owned: {}, totalSpent: {}, desc: "Paper, low risk.6% div", history: [] },
+  { name: "ALUP4", price: 10.99, volatility: 0.12, dividend: 0.06, owned: {}, totalSpent: {}, desc: "Energy, low risk.6% div", history: [] },
+  { name: "SAPR4", price: 8.51, volatility: 0.15, dividend: 0.05, owned: {}, totalSpent: {}, desc: "Water, low medium risk.5% div", history: [] },
+  { name: "TASA4", price: 4.88, volatility: 0.35, dividend: 0.06, owned: {}, totalSpent: {}, desc: "Guns, high volatility.6% div", history: [] },
+  { name: "POMO4", price: 6.20, volatility: 0.15, dividend: 0.09, owned: {}, totalSpent: {}, desc: "Buses, low medium risk.9% div", history: [] },
+  { name: "GRND3", price: 4.74, volatility: 0.10, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Shoes, low risk.10% div", history: [] },
+  { name: "ROMI3", price: 7.15, volatility: 0.08, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Machinery, low risk.10% div", history: [] },
+  { name: "SOJA3", price: 7.13, volatility: 0.40, dividend: 0.02, owned: {}, totalSpent: {}, desc: "Seeds, high volatility.2% div", history: [] },
+  { name: "FIQE3", price: 7.01, volatility: 0.25, dividend: 0.07, owned: {}, totalSpent: {}, desc: "Internet, medium risk.7% div", history: [] },
+  { name: "BBSE3", price: 34.81, volatility: 0.10, dividend: 0.12, owned: {}, totalSpent: {}, desc: "Insurance, low medium risk.12% div", history: [] },
+  { name: "CXSE3", price: 18.35, volatility: 0.10, dividend: 0.08, owned: {}, totalSpent: {}, desc: "Insurance, low medium risk.8% div", history: [] },
+  { name: "BRBI11", price: 19.50, volatility: 0.28, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Investment Bank, medium risk.10% div", history: [] },
+  { name: "BMGB4", price: 5, volatility: 0.17, dividend: 0.1, owned: {}, totalSpent: {}, desc: "Bank, low medium risk.10% div", history: [] },
+  { name: "CMIN3", price: 4.95, volatility: 0.30, dividend: 0.08, owned: {}, totalSpent: {}, desc: "Mining, high medium risk.8% div", history: [] },
+  { name: "IFCM3", price: 1, volatility: 0.35, dividend: 0, owned: {}, totalSpent: {}, desc: "E-Commerce, low high risk.0% div", history: [] },
+  { name: "PETR3", price: 53.91, volatility: 0.50, dividend: 0.08, owned: {}, totalSpent: {}, desc: "Petrolium, ultra high risk.8% div", history: [] },
+  { name: "PRIO3", price: 66.21, volatility: 0.50, dividend: 0, owned: {}, totalSpent: {}, desc: "Petrolium, ultra high risk.0% div", history: [] }
 ];
 
 let playerColors = ["#ff4c4c","#4caf50","#2196f3","#ff9800"];
