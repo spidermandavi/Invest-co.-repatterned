@@ -34,7 +34,7 @@ let playerColors = ["#ff4c4c","#4caf50","#2196f3","#ff9800"];
 function startGame() {
   let count = Number(document.getElementById("playerCount").value);
   gameMode = document.getElementById("gameMode").value;
-  modeValue = Number(document.getElementById("modeValue").value);
+  modeValue = Number(document.getElementById("modeValue").value) || 20;
 
   players = [];
 
