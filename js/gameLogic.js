@@ -40,7 +40,7 @@ function startGame() {
 
   for (let i = 0; i < count; i++) {
     let nameInput = document.getElementById(`playerName${i}`);
-    let name = nameInput && nameInput.value ? nameInput.value : `Player ${i+1}`;
+    let name = nameInput?.value || `Player ${i+1}`;
 
     players.push({ 
       money: 1000, 
