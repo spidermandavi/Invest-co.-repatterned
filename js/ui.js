@@ -379,3 +379,21 @@ function confirmEndGame() {
     <button onclick="document.getElementById('popup').classList.add('hidden')">Cancel</button>
   `, { showOk: false });
 }
+function showDividendPopup(playerIndex) {
+  const dividends = lastDividends[playerIndex];
+  if (!dividends || dividends.length === 0) return;
+
+  let html = `<h3>Dividends for ${players[playerIndex].name}</h3><table style="width:100%;text-align:left;">`;
+  html += `<tr><th>Stock</th><th>Amount</th></tr>`;
+
+  let total = 0;
+  dividends.forEach(d => {
+    html += `<tr><td>${d.stock}</td><td>$${d.amount.toFixed(2)}</td></tr>`;
+    total += d.amount;
+  });
+
+  html += `<tr><td><b>Total</b></td><td><b>$${total.toFixed(2)}</b></td></tr>`;
+  html += `</table>`;
+
+  popup(html); // default popup with OK button
+}
