@@ -47,7 +47,6 @@
         <button id="infoBtn" type="button" class="top-action-btn">Info</button>
         <button id="portfolioBtn" type="button" class="top-action-btn">Portfolio</button>
         ${notificationButtonHTML()}
-        <button id="viewDividendsBtn" type="button" class="top-action-btn" onclick="viewLastDividends()" aria-label="View last dividends">Dividends</button>
       </div>
     `;
 
