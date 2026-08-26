@@ -1,61 +1,112 @@
 /* ===== BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
+  min-height: 100vh;
   font-family: "Segoe UI", Arial, sans-serif;
   color: #eaeaea;
-  background: linear-gradient(135deg, #0d1b2a, #1b263b); /* subtle background gradient */
+  background: linear-gradient(135deg, #0d1b2a, #1b263b);
+}
+
+button,
+input,
+select {
+  font: inherit;
 }
 
 /* ===== CONTAINER ===== */
 .container {
+  width: min(1200px, 100%);
   padding: 20px;
-  max-width: 1200px;
   margin: auto;
 }
 
 /* ===== TITLE ===== */
 h1 {
   text-align: center;
-  font-size: 2.5em;
+  font-size: clamp(2rem, 6vw, 2.5em);
   letter-spacing: 1px;
-  margin-bottom: 20px;
+  margin: 0 0 20px;
 }
 
-/* ===== GLASS PANELS ===== */
-#setup, #game, #podium {
-  background: rgba(255,255,255,0.05);
+/* ===== PANELS ===== */
+#setup,
+#game,
+#podium {
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   margin-top: 20px;
 }
 
+#playerNamesContainer > div {
+  margin: 8px 0;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+input,
+select {
+  width: 100%;
+  max-width: 360px;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+
 /* ===== TABLE ===== */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  overflow: hidden;
   border-radius: 10px;
 }
 
 th {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   font-weight: bold;
 }
 
-th, td {
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+th,
+td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 12px;
   text-align: center;
+  white-space: nowrap;
 }
 
-/* Hover row */
 tr:hover {
-  background: rgba(255,255,255,0.05);
-  transform: scale(1.01);
-  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.stock-name {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.stock-name:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 /* ===== BUTTONS ===== */
@@ -67,19 +118,30 @@ button {
   border-radius: 8px;
   background: linear-gradient(135deg, #2c2f3a, #3a3f4f);
   color: #eaeaea;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 button:hover {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-2px);
   background: linear-gradient(135deg, #3a3f4f, #4a5165);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.trade-buy {
+  background: #2e8b57;
+  color: #fff;
+}
+
+.trade-sell {
+  background: #c43d3d;
+  color: #fff;
 }
 
 /* ===== COLORS ===== */
 .green { color: #4caf50; font-weight: bold; }
 .red { color: #f44336; font-weight: bold; }
 .neutral { color: #ccc; }
+.gray { color: #aaa; }
 
 /* ===== VISIBILITY ===== */
 .hidden {
@@ -89,34 +151,23 @@ button:hover {
 /* ===== INFO BAR ===== */
 #infoBar {
   margin-top: 15px;
-  font-size: 1.3em;
+  font-size: 1.1rem;
   padding: 12px;
   border-radius: 10px;
   text-align: center;
   font-weight: bold;
-  transition: all 0.4s ease;
-}
-
-/* Info container for proper placement */
-.infoContainer {
-  text-align: right;
-  margin-top: 10px;
-}
-
-/* Glow effect */
-.playerTurn {
-  box-shadow: 0 0 20px rgba(255,255,255,0.6);
+  transition: background 0.4s ease;
 }
 
 /* ===== BUTTONS CONTAINER ===== */
 .buttons {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   margin-top: 20px;
   flex-wrap: wrap;
 }
 
-/* Danger button */
 button.danger {
   background: linear-gradient(135deg, #a83232, #e74c3c);
 }
@@ -128,11 +179,11 @@ button.danger:hover {
 /* ===== POPUP ===== */
 #popup {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.75);
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,31 +191,35 @@ button.danger:hover {
 }
 
 #popupContent {
-  background: rgba(30,30,40,0.95);
+  width: min(680px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: rgba(30, 30, 40, 0.98);
   padding: 25px;
   border-radius: 15px;
   text-align: center;
-  min-width: 260px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
   animation: popupFade 0.3s ease;
 }
 
-/* Graph canvas in popup */
 #graphCanvas {
-  margin-top: 15px;
-  border-radius: 10px;
-  background: rgba(50,50,60,0.6);
+  display: block;
   width: 100%;
-  max-width: 500px;
   height: 250px;
+  max-width: 620px;
+  margin: 15px auto 0;
+  border-radius: 10px;
+  background: rgba(50, 50, 60, 0.6);
 }
 
-/* Popup button */
 #popup button {
   margin-top: 15px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, #2196f3, #42a5f5);
-  color: #fff;
+}
+
+.dividend-table {
+  margin: 10px auto;
+  max-width: 500px;
 }
 
 /* ===== PODIUM ===== */
@@ -178,32 +233,61 @@ button.danger:hover {
 
 .podiumBlock {
   width: 120px;
-  height: 150px;
+  min-height: 110px;
   border-radius: 10px;
   text-align: center;
   font-size: 1.2em;
-  padding-top: 10px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+  flex-direction: column;
+  color: #000;
 }
 
-/* Podium colors */
-.gold { background: gold; color: #000; }
-.silver { background: silver; color: #000; }
-.bronze { background: #cd7f32; color: #000; }
+#firstPlace { min-height: 180px; }
+#secondPlace { min-height: 140px; }
+#thirdPlace { min-height: 110px; }
 
 /* ===== ANIMATIONS ===== */
 @keyframes popupFade {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.price-up,
+.price-down {
+  animation: priceFlash 0.7s ease;
+}
+
+.price-up { color: #4caf50; }
+.price-down { color: #f44336; }
+
+@keyframes priceFlash {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.floating-text {
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  transform: translate(-50%, 0);
+  pointer-events: none;
+  font-weight: 800;
+  animation: floatUp 0.9s ease forwards;
+  z-index: 10;
+}
+
+.floating-text.positive { color: #4caf50; }
+.floating-text.negative { color: #f44336; }
+
+@keyframes floatUp {
+  from { opacity: 0; transform: translate(-50%, 0); }
+  15% { opacity: 1; }
+  to { opacity: 0; transform: translate(-50%, -35px); }
 }
 
 /* ===== BUY/SELL TOGGLE ===== */
@@ -220,41 +304,72 @@ button.danger:hover {
   font-weight: bold;
   border-radius: 8px;
   border: 2px solid transparent;
-  transition: all 0.3s ease;
-  cursor: pointer;
 }
 
-/* Active state */
 #buySellToggle button.active {
   color: #fff;
-  box-shadow: 0 0 15px rgba(255,255,255,0.6);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }
 
-/* Buy active */
 #buySellToggle button.active:first-child {
   background: linear-gradient(135deg, #4caf50, #81c784);
   border-color: #4caf50;
 }
 
-/* Sell active */
 #buySellToggle button.active:last-child {
   background: linear-gradient(135deg, #f44336, #e57373);
   border-color: #f44336;
 }
 
-/* Inactive state */
 #buySellToggle button.inactive {
   background: linear-gradient(135deg, #2c2f3a, #3a3f4f);
   color: #aaa;
 }
 
-#buySellToggle button.inactive:hover {
-  transform: translateY(-2px) scale(1.05);
-  background: linear-gradient(135deg, #3a3f4f, #4a5165);
-  color: #eaeaea;
+/* ===== MOBILE ===== */
+@media (max-width: 700px) {
+  .container {
+    padding: 12px;
+  }
+
+  #setup,
+  #game,
+  #podium {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+
+  td button {
+    min-width: 48px;
+    padding: 8px 10px;
+  }
+
+  #infoBar {
+    font-size: 0.95rem;
+  }
+
+  #celebrationContainer {
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .podiumBlock {
+    width: 30%;
+    font-size: 0.95rem;
+  }
 }
 
-/* Hover glow animation for toggle buttons */
-#buySellToggle button:hover {
-  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
