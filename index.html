@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Invest & co.</title>
 
   <link rel="stylesheet" href="css/main.css">
@@ -14,7 +15,6 @@
 
   <h1>Invest & co.</h1>
 
-  <!-- Setup weird-->
   <div id="setup">
     <label>Players:
       <select id="playerCount">
@@ -33,40 +33,41 @@
       </select>
     </label>
 
-    <input id="modeValue" placeholder="Enter value (e.g. 20 or 5000)" />
+    <input id="modeValue" placeholder="Enter value (e.g. 20 or 5000)" inputmode="decimal" />
 
-    <button id="startBtn">Start Game</button>
+    <button id="startBtn" type="button">Start Game</button>
   </div>
 
-  <!-- Game -->
   <div id="game" class="hidden">
 
     <div id="infoBar"></div>
 
     <div class="tradeToggle" id="buySellToggle"></div>
 
-    <table id="stockTable">
-      <thead>
-        <tr>
-          <th>Company</th>
-          <th>Price</th>
-          <th>Change</th>
-          <th>Owned</th>
-          <th>Trade</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="table-wrap">
+      <table id="stockTable">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Price</th>
+            <th>Change</th>
+            <th>Owned</th>
+            <th>Trade</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
     <div class="buttons">
-      <button onclick="endTurn()">End Turn</button>
-      <button class="danger" onclick="confirmEndGame()">End Game</button>
+      <button type="button" onclick="endTurn()">End Turn</button>
+      <button type="button" class="danger" onclick="confirmEndGame()">End Game</button>
     </div>
-      <button id="viewDividendsBtn" onclick="viewLastDividends()">View Last Dividends</button>
-    
+
+    <button id="viewDividendsBtn" type="button" onclick="viewLastDividends()">View Last Dividends</button>
+
   </div>
 
-  <!-- Podium -->
   <div id="podium" class="hidden">
     <div id="celebrationContainer">
       <div class="podiumBlock" id="firstPlace"></div>
@@ -74,12 +75,12 @@
       <div class="podiumBlock" id="thirdPlace"></div>
     </div>
 
-    <button onclick="resetPodium()">Back to Menu</button>
+    <button type="button" onclick="resetPodium()">Back to Menu</button>
+    <div id="gameStats"></div>
   </div>
 
 </div>
 
-<!-- Popup -->
 <div id="popup" class="hidden">
   <div id="popupContent"></div>
 </div>
@@ -88,6 +89,7 @@
 <script src="js/ui.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/main.js"></script>
+<script src="js/gameFeatures.js"></script>
 
 </body>
 </html>
