@@ -90,6 +90,22 @@
 <script src="js/animations.js"></script>
 <script src="js/main.js"></script>
 <script src="js/gameFeatures.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const startButton = document.getElementById("startBtn");
+    if (!startButton) return;
+    startButton.addEventListener("click", () => {
+      window.setTimeout(() => {
+        if (players.length) {
+          resetFeatureState();
+          setInitialFeatureStats();
+          renderFeaturePanels();
+          clearSavedGame();
+        }
+      }, 0);
+    });
+  }, { once: true });
+</script>
 
 </body>
 </html>
