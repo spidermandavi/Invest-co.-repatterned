@@ -1,0 +1,220 @@
+/* ===== FEATURE POLISH ===== */
+.info-main-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  line-height: 1.45;
+}
+
+.info-action-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+
+.top-action-btn {
+  margin: 0;
+  padding: 7px 12px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(0,0,0,.24);
+  color: #fff;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+.top-action-btn:hover {
+  background: rgba(255,255,255,.14);
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+.notice-count {
+  display: inline-flex;
+  min-width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.22);
+  font-size: .72rem;
+}
+
+/* The detailed leaderboard is now opened from the top action row. */
+.portfolio-panel-source {
+  display: none !important;
+}
+
+.portfolio-modal-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.portfolio-modal-heading h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.portfolio-modal-heading span {
+  font-size: .82rem;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.portfolio-card {
+  position: relative;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.portfolio-rank {
+  position: absolute;
+  top: 10px;
+  right: 11px;
+  font-size: .78rem;
+  font-weight: 800;
+  color: #aaa;
+}
+
+.portfolio-name {
+  padding-left: 9px;
+  border-left: 4px solid #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  padding-right: 28px;
+}
+
+.portfolio-worth {
+  margin-top: 8px;
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: .01em;
+}
+
+.portfolio-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.portfolio-metrics span {
+  min-width: 0;
+  padding: 8px 7px;
+  border-radius: 8px;
+  background: rgba(0,0,0,.18);
+  color: #aaa;
+  font-size: .72rem;
+  line-height: 1.3;
+}
+
+.portfolio-metrics b {
+  display: block;
+  margin-top: 2px;
+  color: #f1f1f1;
+  font-size: .82rem;
+  overflow-wrap: anywhere;
+}
+
+.round-notice-list {
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+.round-notice {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.045);
+}
+
+.round-notice.positive {
+  border-left: 4px solid #4caf50;
+}
+
+.round-notice.negative {
+  border-left: 4px solid #f44336;
+}
+
+.round-notice-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 5px;
+}
+
+.round-notice-title span {
+  color: #999;
+  font-size: .78rem;
+  white-space: nowrap;
+}
+
+.round-notice strong {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.round-notice p {
+  margin: 0;
+  color: #bbb;
+  font-size: .9rem;
+  line-height: 1.4;
+}
+
+.round-notice-amount {
+  margin-top: 7px;
+  font-weight: 900;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 700px) {
+  .info-main-line {
+    gap: 5px 10px;
+    font-size: .92rem;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 430px) {
+  .portfolio-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .info-action-row {
+    width: 100%;
+  }
+
+  .top-action-btn {
+    flex: 1 1 auto;
+  }
+}
