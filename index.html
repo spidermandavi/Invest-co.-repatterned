@@ -92,6 +92,7 @@
 <script src="js/main.js"></script>
 <script src="js/gameFeatures.js"></script>
 <script src="js/featurePolish.js"></script>
+<script src="js/feature-refresh.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const startButton = document.getElementById("startBtn");
@@ -103,6 +104,7 @@
           setInitialFeatureStats();
           renderFeaturePanels();
           clearSavedGame();
+          if (typeof window.__investFeaturePolishInit === "function") window.__investFeaturePolishInit();
         }
       }, 0);
     });
