@@ -1,19 +1,22 @@
 # 📈 Investment Game
 
-A browser-based multiplayer stock market game where players trade stocks, earn dividends, and compete to build the highest net worth.
+A browser-based multiplayer stock market game where players trade stocks, earn dividends, react to market news, and compete to build the highest net worth.
 
 ---
 
 ## 🎮 Features
 
-* 👥 2–4 players
+* 👥 2–4 local players
 * 💰 Buy & sell stocks with dynamic prices
-* 📊 Live price changes based on volatility
-* 💸 Dividend system (scaled by investment size)
-* 🎲 Random life events (gain/lose money)
-* 📈 Portfolio & price history graphs
-* 🏆 End-game podium with rankings
-* 🎉 Confetti celebration
+* 📊 Market movement influenced by volatility, trends, market sentiment, and sectors
+* 📰 Market and personal news/events that can affect prices or cash
+* 💸 Dividend system
+* 🏦 Live portfolio leaderboard with cash, stock value, and net worth
+* 💾 Save, continue, and delete saved games using browser local storage
+* 📈 Portfolio & stock price history graphs
+* 🏆 End-game podium and detailed game statistics
+* 🎉 Animated visual feedback
+* 📱 Responsive mobile layout
 
 ---
 
@@ -25,128 +28,87 @@ investment-game/
 ├── index.html                # Main HTML file (UI structure)
 │
 ├── css/
-│   ├── main.css             # Core styling (layout, colors, UI)
-│   └── animations.css       # Animations (background, podium, effects)
+│   ├── main.css             # Core styling and feature panels
+│   └── animations.css       # Background, podium, and visual animations
 │
 ├── js/
-│   ├── gameLogic.js         # Core game logic (players, stocks, turns)
-│   ├── ui.js                # UI rendering & interactions
-│   ├── animations.js        # Visual effects (numbers, flashes, floating text)
-│   └── main.js              # Initialization & function overrides
+│   ├── gameLogic.js         # Core game mechanics
+│   ├── ui.js                # UI rendering, graphs, popups, and trade controls
+│   ├── animations.js        # Number, price, and floating-text effects
+│   ├── gameFeatures.js      # Portfolio, market/news, save/load, and end-game systems
+│   └── main.js              # Startup initialization
 │
 └── README.md                # Project documentation
 ```
 
 ---
 
-## 🧠 File Responsibilities
+## 🧠 New Systems
 
-### `index.html`
+### Portfolio dashboard
 
-* Defines the layout of the game
-* Contains:
+During a game, players can see a live leaderboard showing:
 
-  * Setup screen
-  * Game screen (table, buttons)
-  * Podium screen
-  * Popup system
+* Cash
+* Stock value
+* Total net worth
+* Current invested profit/loss
+* Ranking against the other players
 
----
+### Market simulation
 
-### `css/main.css`
+Prices are no longer driven only by isolated random volatility. The market now tracks:
 
-* Handles:
+* Overall market sentiment
+* A general market trend
+* Sector trends
+* Individual stock volatility
+* A small mean-reversion effect toward the starting price
 
-  * Layout (containers, tables)
-  * Buttons & UI styling
-  * Popup design
-  * Buy/Sell toggle appearance
+Stocks are grouped into sectors such as Energy, Finance, Technology, Materials, Agriculture, Industrials, Consumer, Utilities, and Defense.
 
----
+### News and events
 
-### `css/animations.css`
+Events can affect individual players, the entire market, or a specific sector. Recent news is visible during the game and a full news history can be opened at any time.
 
-* Handles:
+### Save / load
 
-  * Background gradient animation
-  * Podium animations (rise effect)
-  * Visual polish
+Games can be saved in the browser and continued later on the same device/browser. The saved state includes players, positions, stock prices, price history, turn information, market state, dividends, and feature statistics.
 
----
+### End-game statistics
 
-### `js/gameLogic.js`
+After the podium, players can open a detailed statistics screen containing:
 
-Core mechanics of the game:
-
-* Game state (players, stocks, turns)
-* Buying & selling logic
-* Market price updates
-* Dividend system
-* Random events
-* Win conditions
-* Game reset & force-sell system
-
----
-
-### `js/ui.js`
-
-Handles everything the player sees:
-
-* Rendering:
-
-  * Info bar
-  * Stock table
-* Popup system
-* Graph drawing (canvas)
-* Trade controls (Buy/Sell toggle)
-* Player & stock info views
-* End game confirmation
-
----
-
-### `js/animations.js`
-
-Adds visual feedback:
-
-* Number animations (price changes)
-* Flash effects (green/red)
-* Floating text (profits, events)
-
----
-
-### `js/main.js`
-
-Startup & enhancements:
-
-* Initializes player input fields
-* Hooks into:
-
-  * `endTurn()` → animate stock prices
-  * `applyDividends()` → floating profit text
-  * `randomEvent()` → floating gain/loss text
+* Final net worth and gain for every player
+* Portfolio ROI
+* Best holding
+* Best and worst-performing stock
+* Trading volume
+* Number of transactions
+* Dividends paid
+* Market and personal event counts
 
 ---
 
 ## 🚀 How to Run
 
-1. Download or clone the project
-2. Open `index.html` in your browser
-3. Select:
+1. Download or clone the project.
+2. Open `index.html` in a browser.
+3. Select the number of players and game mode.
+4. Enter the target number of turns or target net worth.
+5. Click **Start Game**.
 
-   * Number of players
-   * Game mode (turns or target money)
-4. Click **Start Game**
+A **Continue Saved Game** button appears when a saved game exists on that browser/device.
 
 ---
 
-## 🛠️ Future Improvements (Ideas)
+## 🛠️ Future Ideas
 
 * 🤖 AI players (bots)
 * 🌐 Online multiplayer
-* 💾 Save / load system
-* 📱 Mobile optimization
-* 📰 News-based market events
-* 📊 Advanced charts (hover, labels)
+* 💳 Loans and interest
+* 🎚️ Difficulty levels
+* 📊 Advanced interactive charts
 
 ---
 
