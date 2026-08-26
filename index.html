@@ -45,11 +45,6 @@
 
     <div class="tradeToggle" id="buySellToggle"></div>
 
-    <div class="buttons">
-      <button type="button" onclick="endTurn()">End Turn</button>
-      <button type="button" class="danger" onclick="confirmEndGame()">End Game</button>
-    </div>
-
     <div class="table-wrap">
       <table id="stockTable">
         <thead>
@@ -64,6 +59,13 @@
         <tbody></tbody>
       </table>
     </div>
+
+    <div class="buttons">
+      <button type="button" onclick="endTurn()">End Turn</button>
+      <button type="button" class="danger" onclick="confirmEndGame()">End Game</button>
+    </div>
+
+    <button id="viewDividendsBtn" type="button" onclick="viewLastDividends()">View Last Dividends</button>
 
   </div>
 
