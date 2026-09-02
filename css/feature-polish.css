@@ -47,7 +47,6 @@
   font-size: .72rem;
 }
 
-/* The detailed leaderboard is now opened from the top action row. */
 .portfolio-panel-source {
   display: none !important;
 }
@@ -190,6 +189,101 @@
   font-size: 1.05rem;
 }
 
+/* ===== UPDATES 4-6 ===== */
+.portfolio-focus {
+  margin-bottom: 16px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  background: rgba(255,255,255,.045);
+}
+
+.portfolio-focus-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.portfolio-focus-title span {
+  padding-left: 9px;
+  border-left: 4px solid #fff;
+  font-weight: 800;
+}
+
+.portfolio-focus-title strong {
+  font-size: 1.25rem;
+}
+
+.portfolio-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.portfolio-dashboard-grid > div {
+  padding: 9px;
+  border-radius: 9px;
+  background: rgba(0,0,0,.18);
+}
+
+.portfolio-dashboard-grid small {
+  display: block;
+  color: #999;
+  font-size: .72rem;
+}
+
+.portfolio-dashboard-grid b {
+  display: block;
+  margin-top: 3px;
+  font-size: .9rem;
+}
+
+.portfolio-section-title {
+  margin: 17px 0 8px;
+  font-size: .9rem;
+  font-weight: 800;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.current-player-card {
+  box-shadow: 0 0 0 1px rgba(255,255,255,.14), inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.portfolio-mini-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.portfolio-mini-stats span {
+  min-width: 0;
+  padding: 6px;
+  border-radius: 7px;
+  background: rgba(0,0,0,.16);
+  color: #aaa;
+  font-size: .68rem;
+  overflow-wrap: anywhere;
+}
+
+.portfolio-holdings-table td small {
+  display: block;
+  margin-top: 2px;
+  color: #888;
+  font-size: .68rem;
+}
+
+.stats-note {
+  margin: 12px 0 0;
+  color: #999;
+  font-size: .78rem;
+  line-height: 1.45;
+}
+
 @media (max-width: 700px) {
   .info-main-line {
     gap: 5px 10px;
@@ -203,10 +297,20 @@
   .portfolio-metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .portfolio-dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .portfolio-holdings-wrap {
+    overflow-x: auto;
+  }
 }
 
 @media (max-width: 430px) {
-  .portfolio-metrics {
+  .portfolio-metrics,
+  .portfolio-mini-stats,
+  .portfolio-dashboard-grid {
     grid-template-columns: 1fr;
   }
 
@@ -216,5 +320,10 @@
 
   .top-action-btn {
     flex: 1 1 auto;
+  }
+
+  .portfolio-focus-title {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
