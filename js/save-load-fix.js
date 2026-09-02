@@ -1,9 +1,19 @@
 // ===== SAVE / LOAD UI RECOVERY =====
-// Restores the trade controls after a saved game is loaded and guards against
-// a stale/invalid current-player index preventing the stock table from rendering.
+// Keeps gameplay state and trading controls in sync when a saved game is resumed.
 
 (function () {
   function installSaveLoadRecovery() {
+    if (typeof window.buildSaveData === "function" && !window.buildSaveData.__uiRecovery) {
+      const originalBuildSaveData = window.buildSaveData;
+      const recoveredBuildSaveData = function (...args) {
+        const data = originalBuildSaveData.apply(this, args);
+        if (data && typeof data === "object") data.tradeMode = tradeMode === "sell" ? "sell" : "buy";
+        return data;
+      };
+      recoveredBuildSaveData.__uiRecovery = true;
+      window.buildSaveData = recoveredBuildSaveData;
+    }
+
     if (typeof window.loadSavedGame !== "function" || window.loadSavedGame.__uiRecovery) return;
 
     const originalLoadSavedGame = window.loadSavedGame;
@@ -16,9 +26,18 @@
         currentPlayer = 0;
       }
 
-      // loadSavedGame restores gameplay state, but tradeMode is UI state.
-      // Rebuild the toggle explicitly so BUY/SELL is always usable after resume.
-      const restoredMode = tradeMode === "sell" ? "sell" : "buy";
+      // Older saves do not contain tradeMode, so default those saves to BUY.
+      // Newer saves keep the mode the player was using when they saved.
+      let restoredMode = "buy";
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        const savedData = raw ? JSON.parse(raw) : null;
+        if (savedData?.tradeMode === "sell") restoredMode = "sell";
+      } catch {
+        // Keep the safe BUY default if the saved UI state cannot be read.
+      }
+
+      tradeMode = restoredMode;
       setTradeMode(restoredMode);
       render();
       if (typeof renderFeaturePanels === "function") renderFeaturePanels();
